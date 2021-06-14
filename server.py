@@ -24,6 +24,11 @@ import argparse
 from socket import *
 import time
 import pickle
+import logging
+import log.server_log_config
+
+log.server_log_config.init_log()
+logger = logging.getLogger('server_log_config')
 
 def run_server(addr='', port=7777):
     s = socket(AF_INET, SOCK_STREAM)
@@ -43,9 +48,11 @@ def run_server(addr='', port=7777):
 
 
 if __name__ == '__main__':
+    logger.info('App started')
     parser = argparse.ArgumentParser()
     parser.add_argument('addr', help='IP-адрес для прослушивания', default='')
     parser.add_argument('port', help = 'TCP-порт для работы', type=int, default=7777)
     args = parser.parse_args()
     run_server(args.addr, args.port)
+    logger.info('App ending')
 
